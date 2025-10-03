@@ -1,6 +1,6 @@
 .DEFAULT_GOAL	= all
 
-NAME			= containers
+NAME			= ${NAME}
 CC				= c++
 CFLAGS			= -Wall -Wextra -Werror -std=c++98
 CPPFLAGS		=
@@ -8,7 +8,7 @@ LDFLAGS			=
 LDLIBS			= 
 FILE			= main
 SRCS 			= $(addprefix $(PREFIX), $(addsuffix $(SUFFIX).cpp, $(FILE)))
-OBJS 			= $(SRCS:.c=.o)
+OBJS 			= $(SRCS:.cpp=.o)
 
 # ********************************* MAKE RULES ******************************* #
 
@@ -31,7 +31,7 @@ re :
 	make fclean
 	make all
 
-%.o : %.c
+%.o : %.cpp
 	$(CC) -c $(CFLAGS) $< -o $@
 
 .PHONY : all clean fclean re bonus
