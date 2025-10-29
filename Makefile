@@ -1,12 +1,12 @@
 .DEFAULT_GOAL	= all
 
-NAME			= ${NAME}
-CC				= c++
-CFLAGS			= -Wall -Wextra -Werror -std=c++98
+NAME			= containers
+CXX				= c++
+CXXFLAGS		= -Wall -Wextra -Werror -std=c++98
 CPPFLAGS		=
-LDFLAGS			= 
-LDLIBS			= 
-FILE			= main
+LDFLAGS			=
+LDLIBS			=
+FILE			= makefiletest
 SRCS 			= $(addprefix $(PREFIX), $(addsuffix $(SUFFIX).cpp, $(FILE)))
 OBJS 			= $(SRCS:.cpp=.o)
 
@@ -15,23 +15,20 @@ OBJS 			= $(SRCS:.cpp=.o)
 all : $(NAME)
 
 $(NAME) : $(OBJS)
-	$(CC) $(CFLAGS) $(OBJS) -o $(NAME) $(LDFLAGS) $(LDLIBS)
+	$(CXX) $(CXXFLAGS) $(OBJS) -o $(NAME) $(LDFLAGS) $(LDLIBS)
 
 clean :
-	make rm_obj
-	BONUS=1 make rm_obj
-	make clean
+	rm -f $(OBJS)
 
-fclean :
-	rm -f $(NAME) 
-	make clean
-	make fclean
+fclean : clean
+	rm -f $(NAME)
 
-re : 
-	make fclean
-	make all
+re : fclean all
 
 %.o : %.cpp
-	$(CC) -c $(CFLAGS) $< -o $@
+	$(CXX) -c $(CXXFLAGS) $(CPPFLAGS) $< -o $@
 
-.PHONY : all clean fclean re bonus
+% : %.o
+	$(CXX) $(CXXFLAGS) $< -o $@
+
+.PHONY : all clean fclean re
