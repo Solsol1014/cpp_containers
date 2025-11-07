@@ -2,7 +2,7 @@
 #define RI_H
 #include "iterator_traits.h"
 
-// namespace ft {
+namespace ft {
 template <typename Iter>
 class reverse_iterator {
     protected:
@@ -126,6 +126,6 @@ template <typename Iter1, typename Iter2>
 typename reverse_iterator<Iter1>::difference_type operator-(const reverse_iterator<Iter1>& lhs, const reverse_iterator<Iter2>& rhs) {
     return rhs.base() - lhs.base();
 }
-// }
+}
 
 #endif
