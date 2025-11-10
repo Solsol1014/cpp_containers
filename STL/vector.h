@@ -67,6 +67,18 @@ class vector {
     vector(const vector& other) {
 
     }
+
+    // ## Destructor
+    ~vector() {
+        while(_size) {
+            --_size;
+            _alloc.destroy(_data + _size);
+        }
+
+        if(_data) {
+            _alloc.deallocate(_data, _capacity);
+        }
+    }
 };
 
 template <>
