@@ -6,7 +6,7 @@ namespace ft {
 template <typename Iter>
 class reverse_iterator {
     protected:
-        Iter current
+        Iter current;
 
     public:
         typedef Iter iterator_type;

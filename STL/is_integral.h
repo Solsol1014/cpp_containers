@@ -32,7 +32,7 @@ template <> struct is_integral<int> : bool_constant<true> {};
 template <> struct is_integral<unsigned int> : bool_constant<true> {};
 template <> struct is_integral<long> : bool_constant<true> {};
 template <> struct is_integral<unsigned long> : bool_constant<true> {};
-// template <> struct is_integral<long long> : bool_constant<true>{};
+template <> struct is_integral<long long> : bool_constant<true>{};
 
 template <typename T> struct is_integral<const T> : is_integral<T> {};
 template <typename T> struct is_integral<volatile T> : is_integral<T> {};

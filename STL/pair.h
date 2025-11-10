@@ -6,6 +6,8 @@ template <typename T1, typename T2>
 class pair {
 private:
 public:
+    typedef T1 first_type;
+    typedef T2 second_type;
     T1 first;
     T2 second;
 
@@ -26,7 +28,7 @@ public:
 
 template <typename T1, typename T2>
 pair<T1, T2> make_pair(T1 x, T2 y) {
-    return pair<int, int>(x, y);
+    return pair<T1, T2>(x, y);
 }
 
 template <typename T1, typename T2, typename U1, typename U2>
