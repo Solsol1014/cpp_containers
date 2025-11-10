@@ -9,6 +9,8 @@ LDLIBS			=
 FILE			= makefiletest
 SRCS 			= $(addprefix $(PREFIX), $(addsuffix $(SUFFIX).cpp, $(FILE)))
 OBJS 			= $(SRCS:.cpp=.o)
+COMMON_SRCS		:= new.cpp
+COMMON_OBJS		:= $(COMMON_SRCS:.cpp=.o)
 
 # ********************************* MAKE RULES ******************************* #
 
@@ -28,7 +30,7 @@ re : fclean all
 %.o : %.cpp
 	$(CXX) -c $(CXXFLAGS) $(CPPFLAGS) $< -o $@
 
-% : %.o
+% : %.o $(COMMON_OBJS)
 	$(CXX) $(CXXFLAGS) $< -o $@
 
 .PHONY : all clean fclean re
