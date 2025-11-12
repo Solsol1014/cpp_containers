@@ -1,6 +1,6 @@
 #ifndef RI_H
 #define RI_H
-#include "iterator_traits.h"
+#include "iterator.h"
 
 namespace ft {
 template <typename Iter>

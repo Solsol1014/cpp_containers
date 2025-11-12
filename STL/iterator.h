@@ -1,8 +1,10 @@
 #ifndef IT_H
 #define IT_H
+
+#include <cstddef>
 #include <iterator>
 
-namespace ft{
+namespace ft {
 template <typename Iter>
 struct iterator_traits {
     typedef typename Iter::difference_type difference_type;
@@ -29,6 +31,20 @@ struct iterator_traits<const T*> {
     typedef const T& reference;
     typedef std::random_access_iterator_tag iterator_category;
 };
+
+template <typename Category, typename T, typename Distance = std::ptrdiff_t, typename Pointer = T*, typename Reference = T&>
+struct iterator {
+    typedef Category iterator_category;
+    typedef T value_type;
+    typedef Distance difference_type;
+    typedef Pointer pointer;
+    typedef Reference reference;
+};
+
+template <typename InputIt>
+typename ft::iterator_traits<InputIt>::difference_type distance(InputIt first, InputIt last) {
+
+}
 }
 
 #endif
