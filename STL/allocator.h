@@ -24,10 +24,14 @@ struct allocator {
 
     allocator() throw() {}
 
-    allocator(const allocator& other) throw() {}
+    allocator(const allocator& other) throw() {
+        (void)other;
+    }
 
     template <typename U>
-    allocator(const allocator<U>& other) throw() {}
+    allocator(const allocator<U>& other) throw() {
+        (void)other;
+    }
 
     ~allocator() {}
 
@@ -40,11 +44,13 @@ struct allocator {
     }
 
     pointer allocate(size_type n, const void* hint = 0) {
-        return static_cast<pointer>(::operator new(n*sizeof(T)))
+        (void)hint;
+        return static_cast<pointer>(::operator new(n*sizeof(T)));
     }
 
     void deallocate(pointer p, std::size_t n) {
         ::operator delete(p);
+        (void)n;
     }
 
     size_type max_size() const throw() {
@@ -62,11 +68,15 @@ struct allocator {
 
 template <typename T1, typename T2>
 bool operator==(const allocator<T1>& lhs, const allocator<T2>& rhs) throw() {
+    (void)lhs;
+    (void)rhs;
     return true;
 }
 
 template <typename T1, typename T2>
 bool operator!=(const allocator<T1>& lhs, const allocator<T2>& rhs) throw() {
+    (void)lhs;
+    (void)rhs;
     return false;
 }
 

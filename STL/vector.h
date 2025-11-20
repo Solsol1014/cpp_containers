@@ -13,8 +13,9 @@
 #include <limits>
 
 namespace ft{
-template <typename T, typename Allocator = ft::allocator<T>>
+template <typename T, typename Allocator = ft::allocator<T> >
 class vector {
+    public:
     typedef T value_type;
     typedef Allocator allocator_type;
     typedef std::size_t size_type;
@@ -30,14 +31,14 @@ class vector {
 
     private:
     allocator_type _alloc; // 할당자 (ex - ft::allocator<T>())
-    pointer _data = NULL; // 시작 포인터
-    size_type _size = 0; // 요소 개수
-    size_type _capacity = 0; // 할당 공간
+    pointer _data; // 시작 포인터
+    size_type _size; // 요소 개수
+    size_type _capacity; // 할당 공간
 
     public:
     // ## Constructors
     // 2: The default constructor until C++11. Constructs an empty vector with the given allocator alloc.
-    explicit vector(const Allocator& alloc = Allocator()): _alloc(alloc) {}
+    explicit vector(const Allocator& alloc = Allocator()): _alloc(alloc), _data(NULL), _size(0), _capacity(0) {}
 
     // 4: Constructs a vector with count copies of elements with value value.
     explicit vector(size_type count, const T& value = T(), const Allocator& alloc = Allocator()): _alloc(alloc) {
@@ -48,7 +49,7 @@ class vector {
         _capacity = count;
         _size = count;
 
-        for(size_type i = 0 ; i<count : i++) {
+        for(size_type i = 0 ; i<count ; i++) {
             _alloc.construct(_data+i, value);
         }
     }
@@ -56,6 +57,7 @@ class vector {
     // 5: Constructs a vector with the contents of the range [first, last). Each iterator in [first, last) is dereferenced exactly once. If InputIt does not satisfy the requirements of LegacyInputIterator, overload (4) is called instead with arguments static_cast<size_type>(first), last and alloc.
     template <typename InputIt>
     vector(InputIt first, InputIt last, const Allocator& alloc = Allocator(), typename ft::enable_if<!ft::is_integral<InputIt>::value, int>::type* = 0): _alloc(alloc) {
+        _size = 0;
         size_type n = 0;
         for(InputIt itr = first ; itr!=last ; itr++)
             n++;
@@ -99,7 +101,7 @@ class vector {
         _size = other.size();
 
         for(size_type i = 0 ; i<_size ; ++i) {
-            _alloc.construct(other[i]);
+            _alloc.construct(_data+i, other[i]);
         }
 
         return *this;
@@ -160,14 +162,14 @@ class vector {
 
     reference at(size_type pos) {
         if(pos >= _size)
-            throw std::out_of_range("");
+            throw std::out_of_range("vector");
         else
             return _data[pos];
     }
 
     const_reference at(size_type pos) const {
         if(pos >= _size)
-            throw std::out_of_range("ft::vector::at");
+            throw std::out_of_range("vector");
         else
             return _data[pos];
     }
@@ -192,7 +194,7 @@ class vector {
         return _data[_size-1];
     }
 
-    const_reference back() {
+    const_reference back() const {
         return _data[_size-1];
     }
 
@@ -232,7 +234,7 @@ class vector {
         return reverse_iterator(begin());
     }
 
-    const_reverse_iterator rend() {
+    const_reverse_iterator rend() const {
         return reverse_iterator(begin());
     }
 
@@ -506,7 +508,8 @@ class vector {
             if(count>_capacity)
                 reserve(count);
 
-            for(size_type i = 0 ; i < count-_size ; ++i)
+            size_type store_size = _size;
+            for(size_type i = 0 ; i < count-store_size ; ++i)
                 push_back(T());
         }
     }
@@ -521,8 +524,9 @@ class vector {
         else {
             if(count>_capacity)
                 reserve(count);
-
-            for(size_type i = 0 ; i < count-_size ; ++i)
+            
+            size_type store_size = _size;
+            for(size_type i = 0 ; i < count-store_size ; ++i)
                 push_back(val_copy);
         }
     }
@@ -550,7 +554,7 @@ bool operator==(const vector<T, Alloc>& lhs, const vector<T, Alloc>& rhs) {
     if(lhs.size()!=rhs.size())
         return false;
 
-    for(int i = 0 ; i<lhs.size() ; ++i) {
+    for(unsigned long i = 0 ; i<lhs.size() ; ++i) {
         if(lhs[i]!=rhs[i])
             return false;
     }

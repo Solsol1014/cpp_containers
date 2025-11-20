@@ -43,7 +43,8 @@ struct iterator {
 
 template <typename InputIt>
 typename ft::iterator_traits<InputIt>::difference_type distance(InputIt first, InputIt last) {
-
+    (void)first;
+    (void)last;
 }
 }
 
